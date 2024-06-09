@@ -5,20 +5,19 @@
 #include <string.h>
 #include <signal.h>
 
-int total_calls = 0;
 int read_calls = 0;
 int write_calls = 0;
 
 void sigint_handler(int signum) {
     
     char buffer[1024];
-    FILE *fp_calls = fopen("syscalls.log", "r");
-    if (fp_calls == NULL) {
-        perror("Error al abrir el archivo de llamadas");
+    FILE *file_logs = fopen("syscalls.log", "r");
+    if (file_logs == NULL) {
+        perror("Error al abrir el archivo de logs");
         exit(EXIT_FAILURE);
     }
 
-    while (fgets(buffer, sizeof(buffer), fp_calls) != NULL) {
+    while (fgets(buffer, sizeof(buffer), file_logs) != NULL) {
         if (strstr(buffer, "read") != NULL) {
             read_calls++;
         } else if (strstr(buffer, "write") != NULL) {
@@ -27,7 +26,7 @@ void sigint_handler(int signum) {
     }
 
     // Cerrar el archivo después de leerlo
-    fclose(fp_calls);
+    fclose(file_logs);
 
     // Imprimir resultados
     printf("\nNúmero total de llamadas al sistema: %d\n", read_calls + write_calls);
@@ -61,14 +60,14 @@ int main() {
             waitpid(pid2, &status, 0);
 
         } else {
-            // Estamos en el proceso hijo 2
+            // hijo 2
             char *args[] = {"0", NULL};
             execv("Hijo.bin", args);
             perror("Error en execv");
             exit(EXIT_FAILURE);
         }
     } else {
-        // Estamos en el proceso hijo 1
+        // hijo 1
         char *args[] = {"0", NULL};
         execv("Hijo.bin", args);
         perror("Error en execv");
