@@ -31,15 +31,6 @@ struct thread_data
     char errores[150][100];
 };
 
-void print_json_object(char *json_string)
-{
-    cJSON *json = cJSON_Parse(json_string);
-    char *formatted_json = cJSON_Print(json);
-    printf("%s\n", formatted_json);
-    cJSON_Delete(json);
-    free(formatted_json);
-}
-
 void *carga_usuarios(void *arg)
 {
     struct thread_data *data = (struct thread_data *)arg;
