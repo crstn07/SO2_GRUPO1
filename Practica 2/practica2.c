@@ -7,15 +7,19 @@
 #include <ctype.h>
 #include <time.h>
 #include <unistd.h>
+
+
 struct data_struct
 {
     int cuenta;
     char nombre[50];
     double saldo;
 };
+
 struct data_struct usuarios[150];
 int usuarios_size = 0;
 // pthread_mutex_t lock;
+
 
 struct thread_data
 {
@@ -303,7 +307,7 @@ int main(int argc, char *argv[])
             scanf("%d", &cuenta1);
             printf(" > Monto a Transferir: ");
             scanf("%lf", &monto);
-            // deposito(cuenta1, monto, 0);
+            deposito(cuenta1, monto, 0);
             break;
 
         case 2:
@@ -312,7 +316,7 @@ int main(int argc, char *argv[])
             scanf("%d", &cuenta1);
             printf(" > Monto a debitar: ");
             scanf("%lf", &monto);
-            // retiro(cuenta1, monto, 0);
+            retiro(cuenta1, monto, 0);
             break;
 
         case 3:
@@ -323,14 +327,14 @@ int main(int argc, char *argv[])
             scanf("%d", &cuenta2);
             printf(" > Monto a debitar: ");
             scanf("%lf", &monto);
-            // transferencia(cuenta1, cuenta2, monto, 0);
+            transferencia(cuenta1, cuenta2, monto, 0);
             break;
 
         case 4:
             printf("\n---------- Consultar Cuenta ---------- ");
             printf("\n > Numero de cuenta: ");
             scanf("%d", &cuenta1);
-            // consultar_cuenta(cuenta1);
+            consultar_cuenta(cuenta1);
             break;
         case 5:
             printf("Ingrese la ruta del archivo de transacciones: ");
@@ -358,3 +362,190 @@ int main(int argc, char *argv[])
     } while (opcion != 8);
     return 0;
 }
+
+
+//funcion para depositar a una cuenta
+int deposito(const int cuenta, const double monto, const int validacion)
+{
+    int posicion;
+    if (!verificar_cuenta(cuenta, &posicion))
+    {
+        if (validacion)
+        {
+            return 1;
+        }
+        printf("\n   La cuenta no existe\n");
+        return 1;
+    }
+    if (!verificar_monto(monto))
+    {
+        if (validacion)
+        {
+            return 2;
+        }
+        printf("\n   El monto es invalido\n");
+        return 2;
+    }
+    usuarios[posicion].saldo = usuarios[posicion].saldo + monto;
+    printf("\n   Deposito correcto");
+    return 0;
+}
+
+//funcion para retirar saldo de una cuenta
+int retiro(const int cuenta, const double monto, const int validacion)
+{
+    int posicion;
+    if (!verificar_cuenta(cuenta, &posicion))
+    {
+        if (validacion == 1)
+        {
+            return 1;
+        }
+        else
+        {
+            printf("\n   La cuenta no existe\n");
+            return 1;
+        }
+    }
+    if (!verificar_monto(monto))
+    {
+        if (validacion == 1)
+        {
+            return 2;
+        }
+        else
+        {
+            printf("\n   El monto es invalido\n");
+            return 2;
+        }
+    }
+    if (monto > usuarios[posicion].saldo)
+    {
+        if (validacion == 1)
+        {
+            return 3;
+        }
+        else
+        {
+            printf("\n   No cuenta con suficiente saldo\n");
+            return 3;
+        }
+    }
+
+    usuarios[posicion].saldo -= monto;
+    printf("\n   Debito correcto");
+    return 0;
+}
+
+//funcion para realizar transferencias entre 2 cuentas
+int transferencia(const int cuenta, const int cuenta2, const double monto, const int validacion)
+{
+    int posicion;
+    int posicion2;
+    if (!verificar_cuenta(cuenta, &posicion))
+    {
+        if (validacion)
+        {
+            return 1;
+        }
+        printf("\n   La cuenta a debitar no existe");
+        return 1;
+    }
+    if (!verificar_cuenta(cuenta2, &posicion2))
+    {
+        if (validacion)
+        {
+            return 2;
+        }
+        printf("\n   La cuenta a acreditar no existe");
+        return 1;
+    }
+    if (!verificar_monto(monto))
+    {
+        if (validacion)
+        {
+            return 3;
+        }
+        printf("\n   El monto es invalido\n");
+        return 1;
+    }
+    if (monto > usuarios[posicion].saldo)
+    {
+        if (validacion)
+        {
+            return 4;
+        }
+        printf("\n   No. cuenta con insuficiente saldo\n");
+        return 1;
+    }
+
+    usuarios[posicion2].saldo = usuarios[posicion2].saldo + monto;
+    usuarios[posicion].saldo = usuarios[posicion].saldo - monto;
+    printf("\n   Transferencia Correctamente");
+    return 0;
+}
+
+//funcion para consulta la informaicon actual de la cuenta
+int consultar_cuenta(const int cuenta)
+{
+    int posicion;
+    if (!verificar_cuenta(cuenta, &posicion))
+    {
+        printf("\n   La cuenta no existe\n");
+        return 1;
+    }
+    printf("\n   DATOS:  ");
+    printf("\n   Numero de cuenta: %d", usuarios[posicion].cuenta);
+    printf("\n   Nombre: %s", usuarios[posicion].nombre);
+    printf("\n   Monto Total: %f", usuarios[posicion].saldo);
+    printf("\n");
+
+    return 0;
+}
+
+//verificaciones
+int verificar_numero(int nuevo_numero, int usuarios_size)
+{
+    for (int i = 0; i < usuarios_size; i++)
+    {
+        if (nuevo_numero == usuarios[i].cuenta)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+int verificar_cuenta(const int cuenta, int *posicion)
+{
+    for (int i = 0; i < usuarios_size; i++)
+    {
+        if (cuenta == usuarios[i].cuenta)
+        {
+            *posicion = i;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int verificar_monto(const double monto)
+{
+    int numero = monto;
+    int punto_decimal = 0; // Variable para contar los puntos decimales encontrados
+    while (numero != 0)
+    {
+        int digito = numero % 10;
+        if (!isdigit(digito + '0') && digito != '.')
+        {
+            return 0; // El monto no es válido
+        }
+
+        numero /= 10;
+    }
+    return 1; // El monto es válido
+}
+
+
+
