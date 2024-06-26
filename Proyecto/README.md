@@ -117,21 +117,19 @@ El programa está estructurado en varias secciones que cumplen funciones especí
 ## Base de Datos MySQL
 ![sql](https://github.com/crstn07/SO2_GRUPO1/assets/83626820/f7a0f7e4-503d-4af9-90c8-89db8b0cc369)
 ### Tabla `dashboard`
-Esta tabla almacena los datos relacionaods con el rendimiento del sistema
-- campos:
-    - id
-    - pid
-    - name
-    - size
-    - memoria
+Esta tabla almacena los datos relacionaods con el rendimiento del sistema. Los campos son:
+- id
+- pid
+- name
+- size
+- memoria
 ### Tabla `llamada`
-Esta tabla registra las llamadas al sistema mmap2 y munmap.
-- campos:
-    - id
-    - pid
-    - name
-    - size
-    - feha_hora
+Esta tabla registra las llamadas al sistema mmap2 y munmap. Los campos son:
+- id
+- pid
+- name
+- size
+- feha_hora
 ### Procedimiento Almacenado `InsertOrUpdateDashboard`
-Este procedimiento almacena inserta o actualiza registros en las tablas llamada y dashboard de la base de datos Proyecto2. Si ya existe un registro en dashboard con el mismo nombre, actualiza sus datos; de lo contrario, inserta un nuevo registro. Los parámetros de entrada son el ID del proceso (pid), el nombre del proceso (name), el tamaño del proceso (size), el porcentaje de memoria (memoria), el nombre del ejecutable (nombre), y la fecha y hora de la llamada al sistema (time).
+Este procedimiento almacena inserta o actualiza registros en las tablas *llamada* y *dashboard* de la base de datos. Si ya existe un registro en dashboard con el mismo nombre, actualiza sus datos; de lo contrario, inserta un nuevo registro. Los parámetros de entrada son el ID del proceso (pid), el nombre del proceso (name), el tamaño del proceso (size), el porcentaje de memoria (memoria), el nombre del ejecutable (nombre), y la fecha y hora de la llamada al sistema (time).
 
