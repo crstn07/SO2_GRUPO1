@@ -52,9 +52,9 @@ las distribuciones de Linux, incluyendo Linux Mint. Si no está instalado, puede
     ```
 
 ## Arquitectura del Sistema
-![ArquiP2](https://github.com/crstn07/SO2_GRUPO1/assets/83626820/cb196afc-6f8a-4dc8-9ef3-8a66fb79548a)
+![ArquiP2](https://github.com/crstn07/SO2_GRUPO1/assets/83626820/0fd2c8bf-b139-4d6a-bbd1-8251b72114ab)
 
-Se utilizó una máquina virtual con Linux Mint 21.2 Cinnamon para el desarrollo de la aplicación en C para el Lector. Se implementó un sistema de monitoreo de memoria que captura las llamadas al sistema realizadas por los procesos en ejecución. Se utilizó SystemTap para capturar las llamadas al sistema y Python para procesar los datos obtenidos. Se implementó un servidor web con Flask para visualizar los datos en un dashboard. Se utilizó MySQL para almacenar los datos obtenidos y Vite.js para el desarrollo de la interfaz de usuario.
+Se utilizó una máquina virtual con Linux Mint 21.2 Cinnamon para el desarrollo del proyecto. Para el Lector en C se implementó un sistema de monitoreo de memoria que captura las llamadas al sistema realizadas por los procesos en ejecución. Se utilizó SystemTap para capturar las llamadas al sistema y Python para procesar los datos obtenidos. Se implementó un servidor web con Flask para visualizar los datos en un dashboard. Se utilizó MySQL para almacenar los datos obtenidos y Vite.js para el desarrollo de la interfaz de usuario.
 
 ## Api Python `app.py`
 ### Librerías Utilizadas
