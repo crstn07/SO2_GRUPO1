@@ -26,3 +26,12 @@
     background-color: #ddd;
   }
   
+  
+.scroleados{
+  white-space: nowrap;
+  width: 600px;
+  height: calc(100vh - 300px);
+  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: auto;
+}

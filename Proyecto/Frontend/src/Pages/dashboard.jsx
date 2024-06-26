@@ -77,27 +77,31 @@ export const Dash = ({ ListParms }) => {
       <div style={{ width: '500px', height: '500px' }}>
         <Doughnut data={data} options={opciones} plugins={[ChartDataLabels]} />
       </div>
-      <div className="tabla-container">
-        <table className="tabla">
-          <thead>
-            <tr>
-              <th>PID</th>
-              <th>Nombre</th>
-              <th colSpan="2">Memoria</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ListParms.ListTable.map((dato) => (
-              <tr key={dato.pid}>
-                <td>{dato.pid}</td>
-                <td>{dato.name}</td>
-                <td>{dato.memoria}KB</td>
-                <td>{dato.cpu}%</td>
+      <div className="scroleados">
+        <div className="tabla-container">
+          <table className="tabla">
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>Nombre</th>
+                <th colSpan="2">Memoria</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {ListParms.ListTable.map((dato) => (
+                <tr key={dato.pid}>
+                  <td>{dato.pid}</td>
+                  <td>{dato.name}</td>
+                  <td>{dato.memoria}KB</td>
+                  <td>{dato.cpu}%</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
       </div>
+
     </div>
   );
 };
