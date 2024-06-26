@@ -26,9 +26,3 @@ probe timer.ms(250){
                system(sprintf("printf '%s,%d,%s,%d,%d' && ps -o %%mem -p %d | awk 'NR==2 {print $1}'| tr -d '\n' ",llamada, pid, nombre, size, tiempo, pid));
        }
 }
-
-
-
-
-
-

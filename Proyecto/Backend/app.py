@@ -1,7 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 from flask_cors import CORS
 from db import query
-import random
 app = Flask(__name__)
 CORS(app)
 
@@ -56,4 +55,4 @@ def Solicitud():
     return  jsonify(list_map)
     
 if __name__ == '__main__':
-    app.run( host= '0.0.0.0' , debug=True , port=3000)
+    app.run( host= '0.0.0.0' , debug=False , port=3000)
